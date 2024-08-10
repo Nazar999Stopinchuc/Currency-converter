@@ -1,0 +1,258 @@
+.converter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+
+  &__cower {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include adaptiv-value ('height', 1140, 302, 1);
+    @include adaptiv-value ('width', 1057, 280, 1);
+    background-image: url(../images/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &__wrap {
+    background: linear-gradient(135deg, rgba(225, 225, 225, 0.1), rgba(225, 225, 225, 0));
+    backdrop-filter: blur(10px);
+    @include adaptiv-value ('padding', 80, 40, 1);
+    border-radius: 20px;
+    border: 1px solid rgba(225, 225, 225, 0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  }
+
+  &__change {
+    position: relative;
+    display: block;
+    background-color: $bg-btn;
+    border-radius: 50%;
+    padding: 5px 10px;
+    transition: background-color .3s;
+    margin-left: auto;
+    @include adaptiv-value ('margin-bottom', 30, 20, 1);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: linear-gradient(180deg, rgba(15, 216, 243, 1), rgba(14, 41, 213, 1));
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    &:hover .converter__arrows {
+      transform: rotateZ(180deg);
+    }
+
+    &:focus {
+      background-color: $bg-btn;
+    }
+  }
+
+  &__change-wrap {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    transform: rotateZ(90deg);
+  }
+
+  &__arrows {
+    fill: $accent-title-color;
+    stroke: $accent-title-color;
+    @include adaptiv-value ('height', 50, 30, 1);
+    @include adaptiv-value ('width', 50, 30, 1);
+    transition: transform .3s;
+
+    &--left {
+      transform: rotateZ(180deg);
+    }
+  }
+
+  &__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__decor-line {
+    position: relative;
+    @include adaptiv-value ('margin-bottom', 60, 40, 1);
+    @include adaptiv-value ('margin-top', 60, 40, 1);
+
+    &::before {
+      content: '';
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(to right, rgba(100, 32, 224, 1), rgba(15, 216, 243, 1),
+          rgba(199, 29, 192, 1), rgba(107, 35, 203, 1), rgba(14, 41, 213, 1));
+      width: 100%;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+  }
+
+  &__decor-circle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include adaptiv-value ('height', 60, 30, 1);
+    @include adaptiv-value ('width', 60, 30, 1);
+    background: linear-gradient(to right, rgba(66, 88, 235, 1), rgba(230, 64, 223, 1));
+    border-radius: 50%;
+    margin: 0 auto;
+    margin: 0 auto;
+    z-index: 100;
+  }
+
+  &__circle-arrow {
+    transform: rotateZ(90deg);
+    fill: $bg-btn;
+    stroke: $bg-btn;
+    stroke-width: 2px;
+    @include adaptiv-value ('height', 30, 20, 1);
+    @include adaptiv-value ('width', 40, 30, 1);
+  }
+
+  &__show-currencies {
+    position: relative;
+    @include adaptiv-value ('font-size', 36, 18, 1);
+    @include adaptiv-value ('padding-left', 45, 25, 1);
+    @include adaptiv-value ('padding-right', 45, 25, 1);
+    @include adaptiv-value ('height', 80, 50, 1);
+    @extend %montserrat-500;
+    background-color: $bg-btn;
+    border-radius: 40px;
+    transition: background-color .3s;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: linear-gradient(180deg, rgba(230, 64, 223, 1), rgba(15, 216, 243, 1));
+      border-radius: inherit;
+      z-index: -1;
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    &.active .converter__show-svg {
+      transform: rotateZ(180deg);
+    }
+  }
+
+  &__input-symbol {
+    @include adaptiv-value ('font-size', 46, 14, 1);
+    @extend %montserrat-500;
+  }
+
+  &__input {
+    @include adaptiv-value ('font-size', 56, 24, 1);
+    @include adaptiv-value ('max-width', 500, 100, 1);
+    background-color: transparent;
+    color: $accent-title-color;
+    @extend %montserrat-500;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__text-decor {
+    @include adaptiv-value ('font-size', 32, 18, 1);
+    @extend %montserrat-500;
+    text-align: center;
+    @include adaptiv-value ('margin-top', 40, 20, 1);
+  }
+}
+
+.all-currencies {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+
+  &__wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $body-background-color;
+    @include adaptiv-value ('padding', 30, 20, 1);
+    border-radius: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    height: 80vh;
+    width: 80vw;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.to-show {
+    display: block;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    @include adaptiv-value ('gap', 40, 20, 1);
+    @include adaptiv-value ('row-gap', 15, 10, 1);
+  }
+
+  &__item {
+    position: relative;
+    cursor: pointer;
+    flex: 1 1 33%;
+    white-space: nowrap;
+    overflow: hidden;
+    @extend %montserrat-500;
+    @include adaptiv-value ('font-size', 36, 18, 1);
+    @include adaptiv-value ('padding-left', 70, 25, 1);
+    transition: color .3s, padding-left .3s;
+
+    &:hover {
+      background: linear-gradient(to right, rgba(66, 88, 235, 1), rgba(230, 64, 223, 1));
+      background-clip: text;
+      color: transparent;
+      padding-left: 100px;
+    }
+
+
+    @include mq ('tablet') {
+      flex: 1 1 50%;
+    }
+  }
+
+  &__name {
+    @extend %montserrat-400;
+    @include adaptiv-value ('font-size', 26, 14, 1);
+    pointer-events: none;
+  }
+
+  &__flag {
+    position: absolute;
+    @include adaptiv-value ('height', 52, 20, 1);
+    @include adaptiv-value ('width', 60, 20, 1);
+    border-radius: 50%;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
