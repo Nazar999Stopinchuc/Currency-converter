@@ -53,6 +53,16 @@
       transform: rotateZ(180deg);
     }
 
+    @media (hover: none) and (pointer: coarse) {
+      &:hover {
+        background-color: $bg-btn;
+      }
+
+      &:hover .converter__arrows {
+        transform: none;
+      }
+    }
+
     &:focus {
       background-color: $bg-btn;
     }
@@ -147,6 +157,12 @@
       background-color: transparent;
     }
 
+    @media (hover: none) and (pointer: coarse) {
+      &:hover {
+        background-color: $bg-btn;
+      }
+    }
+
     &.active .converter__show-svg {
       transform: rotateZ(180deg);
     }
@@ -234,6 +250,14 @@
       padding-left: 100px;
     }
 
+    @media (hover: none) and (pointer: coarse) {
+      &:hover {
+        background: none;
+        background-clip: none;
+        color: $accent-title-color;
+        @include adaptiv-value ('padding-left', 70, 25, 1);
+      }
+    }
 
     @include mq ('tablet') {
       flex: 1 1 50%;

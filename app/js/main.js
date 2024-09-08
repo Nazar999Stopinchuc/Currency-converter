@@ -30,9 +30,8 @@ async function getCurrencies() {
 
     currenciesData = res;
     return currenciesData;
-
-
-  } catch (error) {
+  } 
+  catch (error) {
     console.log(error);
   };
 };
@@ -119,57 +118,61 @@ function inputValidation(input) {
 };
 
 
-changeValueBtn.addEventListener('click', () => {
-  swapAndUpdate(currencyFromBtn, currencyToBtn, 'value', currencyFromBtn, currencyToBtn);
-  swapAndUpdate(currencyFromBtn, currencyToBtn, 'symbol', symbolFrom, symbolTo);
+window.addEventListener('DOMContentLoaded', () => {
+  
+  changeValueBtn.addEventListener('click', () => {
+    swapAndUpdate(currencyFromBtn, currencyToBtn, 'value', currencyFromBtn, currencyToBtn);
+    swapAndUpdate(currencyFromBtn, currencyToBtn, 'symbol', symbolFrom, symbolTo);
 
-  [input.value, output.value] = [output.value, input.value];
-});
+    [input.value, output.value] = [output.value, input.value];
+  });
 
-allCurrenciesBox.addEventListener('click', (e) => {
-  let target = e.target;
-  if (target.tagName !== 'LI') {
+  allCurrenciesBox.addEventListener('click', (e) => {
+    let target = e.target;
+    if (target.tagName !== 'LI') {
+      allCurrenciesBox.classList.remove('to-show');
+      return;
+    }
+
+    const button = exchangeCurrencyTemp === 'from' ? currencyFromBtn : currencyToBtn;
+    const сurrencySymbol = exchangeCurrencyTemp === 'from' ? symbolFrom : symbolTo;
+    let targetValue = target.dataset.value;
+    let targetSymbol = target.dataset.symbol;
+
+    button.dataset.value = targetValue;
+    button.textContent = targetValue;
+    button.dataset.symbol = targetSymbol;
+    сurrencySymbol.textContent = targetSymbol;
+
     allCurrenciesBox.classList.remove('to-show');
-    return;
-  }
+    currencyCalc(currencyFromBtn.dataset.value, currencyToBtn.dataset.value, input, output);
+  });
 
-  const button = exchangeCurrencyTemp === 'from' ? currencyFromBtn : currencyToBtn;
-  const сurrencySymbol = exchangeCurrencyTemp === 'from' ? symbolFrom : symbolTo;
-  let targetValue = target.dataset.value;
-  let targetSymbol = target.dataset.symbol;
+  currencyFromBtn.addEventListener('click', function () {
+    allCurrenciesBox.classList.toggle('to-show');
+    exchangeCurrencyTemp = this.dataset.temp;
+  });
 
-  button.dataset.value = targetValue;
-  button.textContent = targetValue;
-  button.dataset.symbol = targetSymbol;
-  сurrencySymbol.textContent = targetSymbol;
+  currencyToBtn.addEventListener('click', function () {
+    allCurrenciesBox.classList.toggle('to-show');
+    exchangeCurrencyTemp = this.dataset.temp;
+  });
 
-  allCurrenciesBox.classList.remove('to-show');
+  input.addEventListener('input', function () {
+    inputValidation(this);
+    currencyCalc(currencyFromBtn.dataset.value, currencyToBtn.dataset.value, input, output);
+  });
+
+  output.addEventListener('input', function () {
+    inputValidation(this);
+    currencyCalc(currencyToBtn.dataset.value, currencyFromBtn.dataset.value, output, input);
+  });
+
+
+  currencyRender();
   currencyCalc(currencyFromBtn.dataset.value, currencyToBtn.dataset.value, input, output);
 });
 
-currencyFromBtn.addEventListener('click', function () {
-  allCurrenciesBox.classList.toggle('to-show');
-  exchangeCurrencyTemp = this.dataset.temp;
-});
-
-currencyToBtn.addEventListener('click', function () {
-  allCurrenciesBox.classList.toggle('to-show');
-  exchangeCurrencyTemp = this.dataset.temp;
-});
-
-input.addEventListener('input', function () {
-  inputValidation(this);
-  currencyCalc(currencyFromBtn.dataset.value, currencyToBtn.dataset.value, input, output);
-});
-
-output.addEventListener('input', function () {
-  inputValidation(this);
-  currencyCalc(currencyToBtn.dataset.value, currencyFromBtn.dataset.value, output, input);
-});
-
-
-currencyRender();
-currencyCalc(currencyFromBtn.dataset.value, currencyToBtn.dataset.value, input, output);
 
 
 
